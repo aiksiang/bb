@@ -58,22 +58,16 @@ func parseName(doc *goquery.Document) string {
 	s := doc.Find("h1").FilterFunction(
 		func(_ int, s *goquery.Selection) bool {
 			propName, exists := s.Attr("itemprop")
-			if exists && propName == "name" {
-				return true
-			}
-			return false
+			return exists && propName == "name"
 		})
 	return s.Text()
 }
 
 func parsePrice(doc *goquery.Document) string {
 	s := doc.Find("meta").FilterFunction(
-		func(i int, s *goquery.Selection) bool {
+		func(_ int, s *goquery.Selection) bool {
 			propName, exists := s.Attr("itemprop")
-			if exists && propName == "price" {
-				return true
-			}
-			return false
+			return exists && propName == "price"
 		})
 	price, exists := s.Attr("content")
 	if !exists {
